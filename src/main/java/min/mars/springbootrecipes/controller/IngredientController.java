@@ -2,7 +2,7 @@ package min.mars.springbootrecipes.controller;
 
 import min.mars.springbootrecipes.entity.Ingredient;
 import min.mars.springbootrecipes.service.IngredientService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -18,20 +18,34 @@ public class IngredientController {
     }
 
     @PostMapping("/add")
-    public void addIngredient(@RequestBody Ingredient ingredient){
+    public ResponseEntity addIngredient(@RequestBody Ingredient ingredient){
         try {
             ingredientService.addIngredient(ingredient);
+            return ResponseEntity.ok().build();
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
+        return (ResponseEntity) ResponseEntity.EMPTY;
     }
 
     @GetMapping("/show/{id}")
-    public Ingredient showIngredient(@PathVariable Long id){
-        return ingredientService.getIngredient(id);
+    public ResponseEntity<Ingredient> showIngredient(@PathVariable Long id){
+        return ResponseEntity.ok(ingredientService.getIngredient(id));
     }
     @GetMapping("show/all")
     public Map<Long, Ingredient> showAll(){
         return ingredientService.showAll();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteIngredient(@PathVariable Long id){
+        ingredientService.deleteIngredient(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Ingredient> updateIngredient(@PathVariable Long id, @RequestBody Ingredient ingredient){
+        ingredientService.updateIngredient(id, ingredient);
+        return ResponseEntity.ok(ingredient);
     }
 }

@@ -10,4 +10,8 @@ public interface IngredientService {
     Ingredient getIngredient(long id);
 
     Map<Long, Ingredient> showAll();
+
+    void deleteIngredient(Long idIngredient);
+
+    Ingredient updateIngredient(Long id, Ingredient ingredient);
 }

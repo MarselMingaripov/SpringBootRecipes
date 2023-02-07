@@ -29,4 +29,17 @@ public class IngredientServiceImpl implements IngredientService {
     public Map<Long, Ingredient> showAll(){
         return ingredientMap;
     }
+
+    @Override
+    public void deleteIngredient(Long idIngredient){
+        ingredientMap.remove(idIngredient);
+    }
+
+    @Override
+    public Ingredient updateIngredient(Long id, Ingredient ingredient){
+        if (ingredientMap.containsKey(id)){
+            return ingredientMap.put(id, ingredient);
+        }
+        return null;
+    }
 }
