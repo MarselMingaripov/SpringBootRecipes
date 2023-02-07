@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@RestController()
+@RestController
 @RequestMapping("/ingredient")
 public class IngredientController {
 
@@ -17,21 +17,18 @@ public class IngredientController {
         this.ingredientService = ingredientService;
     }
 
-    @PostMapping("/add")
-    public void addIngredient(@RequestBody Ingredient ingredient){
-        try {
-            ingredientService.addIngredient(ingredient);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+    @PostMapping()
+    public void addIngredient(@RequestBody Ingredient ingredient) {
+        ingredientService.addIngredient(ingredient);
     }
 
-    @GetMapping("/show/{id}")
-    public Ingredient showIngredient(@PathVariable Long id){
+    @GetMapping("/{id}")
+    public Ingredient showIngredient(@PathVariable Long id) {
         return ingredientService.getIngredient(id);
     }
-    @GetMapping("show/all")
-    public Map<Long, Ingredient> showAll(){
+
+    @GetMapping("/")
+    public Map<Long, Ingredient> showAll() {
         return ingredientService.showAll();
     }
 }

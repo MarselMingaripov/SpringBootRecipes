@@ -16,21 +16,17 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
-    @PostMapping("/add")
+    @PostMapping()
     public void addRecipe(@RequestBody Recipe recipe){
-        try {
-            recipeService.addRecipe(recipe);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+        recipeService.addRecipe(recipe);
     }
 
-    @GetMapping("/show/{id}")
+    @GetMapping("/{id}")
     public Recipe showRecipe(@PathVariable Long id){
         return recipeService.getRecipe(id);
     }
 
-    @GetMapping("show/all")
+    @GetMapping("/")
     public Map<Long, Recipe> showAll(){
         return recipeService.showAllRecipes();
     }
