@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@RestController()
+@RestController
 @RequestMapping("/ingredient")
 public class IngredientController {
+
 
     private final IngredientService ingredientService;
 
@@ -17,34 +18,30 @@ public class IngredientController {
         this.ingredientService = ingredientService;
     }
 
-    @PostMapping("/add")
-    public ResponseEntity addIngredient(@RequestBody Ingredient ingredient){
-        try {
-            ingredientService.addIngredient(ingredient);
-            return ResponseEntity.ok().build();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-        return (ResponseEntity) ResponseEntity.EMPTY;
+    @PostMapping("/")
+    public ResponseEntity<Ingredient> addIngredient(@RequestBody Ingredient ingredient) {
+        ingredientService.addIngredient(ingredient);
+        return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/show/{id}")
-    public ResponseEntity<Ingredient> showIngredient(@PathVariable Long id){
+    @GetMapping("/{id}")
+    public ResponseEntity<Ingredient> showIngredient(@PathVariable Long id) {
         return ResponseEntity.ok(ingredientService.getIngredient(id));
     }
-    @GetMapping("show/all")
-    public Map<Long, Ingredient> showAll(){
+
+    @GetMapping("/all")
+    public Map<Long, Ingredient> showAll() {
         return ingredientService.showAll();
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteIngredient(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteIngredient(@PathVariable Long id) {
         ingredientService.deleteIngredient(id);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Ingredient> updateIngredient(@PathVariable Long id, @RequestBody Ingredient ingredient){
+    @PutMapping("/{id}")
+    public ResponseEntity<Ingredient> updateIngredient(@PathVariable Long id, @RequestBody Ingredient ingredient) {
         ingredientService.updateIngredient(id, ingredient);
         return ResponseEntity.ok(ingredient);
     }

@@ -12,7 +12,7 @@ public class IngredientServiceImpl implements IngredientService {
 
     private static long idIngredient = 0;
 
-    private Map<Long, Ingredient> ingredientMap = new HashMap<>();
+    private final Map<Long, Ingredient> ingredientMap = new HashMap<>();
 
     @Override
     public Ingredient addIngredient(Ingredient ingredient) {
@@ -22,6 +22,9 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public Ingredient getIngredient(long id) {
+        if (!ingredientMap.containsKey(id)){
+            throw new IllegalArgumentException("Ид не найден");
+        }
         return ingredientMap.get(id);
     }
 

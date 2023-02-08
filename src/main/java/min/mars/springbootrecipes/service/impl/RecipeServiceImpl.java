@@ -15,7 +15,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     private static long recipeId = 0;
 
-    private Map<Long, Recipe> recipeMap = new HashMap<>();
+    private final Map<Long, Recipe> recipeMap = new HashMap<>();
 
     @Override
     public Recipe addRecipe(Recipe recipe) {

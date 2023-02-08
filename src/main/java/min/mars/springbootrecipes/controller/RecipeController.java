@@ -19,46 +19,41 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
-    @PostMapping("/add")
-    public ResponseEntity addRecipe(@RequestBody Recipe recipe){
-        try {
-            recipeService.addRecipe(recipe);
-            return ResponseEntity.ok().build();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-        return (ResponseEntity) ResponseEntity.EMPTY;
+    @PostMapping("/")
+    public ResponseEntity<Recipe> addRecipe(@RequestBody Recipe recipe) {
+        recipeService.addRecipe(recipe);
+        return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/show/{id}")
-    public ResponseEntity<Recipe> showRecipe(@PathVariable Long id){
+    @GetMapping("/{id}")
+    public ResponseEntity<Recipe> showRecipe(@PathVariable Long id) {
         return ResponseEntity.ok().body(recipeService.getRecipe(id));
     }
 
-    @GetMapping("show/all")
-    public Map<Long, Recipe> showAll(){
+    @GetMapping("/all")
+    public Map<Long, Recipe> showAll() {
         return recipeService.showAllRecipes();
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteRecipe(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRecipe(@PathVariable Long id) {
         recipeService.deleteRecipe(id);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @RequestBody Recipe recipe){
+    @PutMapping("/{id}")
+    public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @RequestBody Recipe recipe) {
         recipeService.updateRecipe(id, recipe);
         return ResponseEntity.ok(recipe);
     }
 
     @GetMapping("/show-by-recipe/{recipeId}")
-    public ResponseEntity<Recipe> findRecipeByIngredientId(@PathVariable int recipeId){
+    public ResponseEntity<Recipe> findRecipeByIngredientId(@PathVariable int recipeId) {
         return ResponseEntity.ok(recipeService.findRecipeByIngredientId(recipeId));
     }
 
     @GetMapping("/find-by-ingredients")
-    public List<Recipe> findByIngredients(@RequestParam String ingredient){
+    public List<Recipe> findByIngredients(@RequestParam String ingredient) {
         return recipeService.findByIngredients(ingredient);
     }
 }
