@@ -1,14 +1,11 @@
 package min.mars.springbootrecipes.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
-@ToString
+@Data
+@NoArgsConstructor
 public class Person {
 
     private String name;
@@ -19,7 +16,7 @@ public class Person {
     public Person(String name, String projectName, String projectDescription) {
         this.name = name;
         this.projectName = projectName;
-        this.localDate = localDate.now();
+        this.localDate = LocalDate.now();
         this.projectDescription = projectDescription;
     }
 }

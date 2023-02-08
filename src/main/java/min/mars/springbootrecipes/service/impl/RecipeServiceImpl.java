@@ -25,34 +25,43 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe getRecipe(long id) {
-        if (!recipeMap.containsKey(id)){
-            throw new IllegalArgumentException("Ид не найден");
+        if (recipeMap.containsKey(id)) {
+            return recipeMap.get(id);
+        } else {
+            return null;
         }
-        return recipeMap.get(id);
     }
 
     @Override
-    public Map<Long, Recipe> showAllRecipes(){
-        return recipeMap;
+    public Map<Long, Recipe> showAllRecipes() {
+        if (!recipeMap.isEmpty()) {
+            return recipeMap;
+        } else {
+            return null;
+        }
     }
 
     @Override
-    public void deleteRecipe(Long recipeId){
-        recipeMap.remove(recipeId);
+    public Recipe deleteRecipe(Long recipeId) {
+        if (recipeMap.containsKey(recipeId)) {
+            return recipeMap.remove(recipeId);
+        } else {
+            return null;
+        }
     }
 
     @Override
-    public Recipe updateRecipe(Long id, Recipe recipe){
-        if (recipeMap.containsKey(id)){
+    public Recipe updateRecipe(Long id, Recipe recipe) {
+        if (recipeMap.containsKey(id)) {
             return recipeMap.put(id, recipe);
         }
         return null;
     }
 
     @Override
-    public Recipe findRecipeByIngredientId(int id){
+    public Recipe findRecipeByIngredientId(int id) {
         for (Recipe recipe : recipeMap.values()) {
-            if (recipe.getIngredientList().get(id) != null){
+            if (recipe.getIngredientList().get(id) != null) {
                 return recipe;
             }
         }
@@ -60,15 +69,19 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<Recipe> findByIngredients(String ingredient){
+    public List<Recipe> findByIngredients(String ingredient) {
         List<Recipe> recipeList = new ArrayList<>();
-        for (Recipe recipe : recipeMap.values()) {
-            for (Ingredient ingredient1 : recipe.getIngredientList()) {
-                if (ingredient1.getName().equals(ingredient)){
-                    recipeList.add(recipe);
+        if (!recipeMap.isEmpty()) {
+            for (Recipe recipe : recipeMap.values()) {
+                for (Ingredient ingredient1 : recipe.getIngredientList()) {
+                    if (ingredient1.getName().equals(ingredient)) {
+                        recipeList.add(recipe);
+                    }
                 }
             }
+            return recipeList;
+        } else {
+            return null;
         }
-        return recipeList;
     }
 }

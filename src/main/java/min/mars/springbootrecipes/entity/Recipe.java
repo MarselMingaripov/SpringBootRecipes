@@ -11,9 +11,7 @@ public class Recipe {
 
     private String name;
     private int preparingTimeInMinutes;
-    //@JsonProperty("someMultiValuedField")
     private List<Ingredient> ingredientList;
-    //@JsonProperty("someMultiValuedField")
     private List<Step> preparingSteps;
 
     public Recipe(String name, int preparingTimeInMinutes, List<Ingredient> ingredientList, List<Step> preparingSteps) {

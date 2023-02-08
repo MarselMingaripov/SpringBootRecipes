@@ -1,6 +1,5 @@
 package min.mars.springbootrecipes.service;
 
-import min.mars.springbootrecipes.entity.Ingredient;
 import min.mars.springbootrecipes.entity.Recipe;
 
 import java.util.List;
@@ -13,7 +12,7 @@ public interface RecipeService {
 
     Map<Long, Recipe> showAllRecipes();
 
-    void deleteRecipe(Long recipeId);
+    Recipe deleteRecipe(Long recipeId);
 
     Recipe updateRecipe(Long id, Recipe recipe);
 

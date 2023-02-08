@@ -22,25 +22,35 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public Ingredient getIngredient(long id) {
-        if (!ingredientMap.containsKey(id)){
-            throw new IllegalArgumentException("Ид не найден");
+        if (!ingredientMap.containsKey(id)) {
+            return ingredientMap.get(id);
+        } else {
+            return null;
         }
-        return ingredientMap.get(id);
     }
 
     @Override
-    public Map<Long, Ingredient> showAll(){
-        return ingredientMap;
+    public Map<Long, Ingredient> showAll() {
+
+        if (!ingredientMap.isEmpty()) {
+            return ingredientMap;
+        } else {
+            return null;
+        }
     }
 
     @Override
-    public void deleteIngredient(Long idIngredient){
-        ingredientMap.remove(idIngredient);
+    public Ingredient deleteIngredient(Long idIngredient) {
+        if (ingredientMap.containsKey(idIngredient)) {
+            return ingredientMap.remove(idIngredient);
+        } else {
+            return null;
+        }
     }
 
     @Override
-    public Ingredient updateIngredient(Long id, Ingredient ingredient){
-        if (ingredientMap.containsKey(id)){
+    public Ingredient updateIngredient(Long id, Ingredient ingredient) {
+        if (ingredientMap.containsKey(id)) {
             return ingredientMap.put(id, ingredient);
         }
         return null;
