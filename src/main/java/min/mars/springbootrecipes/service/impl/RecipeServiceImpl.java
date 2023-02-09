@@ -34,11 +34,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Map<Long, Recipe> showAllRecipes() {
-        if (!recipeMap.isEmpty()) {
             return recipeMap;
-        } else {
-            return null;
-        }
     }
 
     @Override
@@ -71,7 +67,6 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public List<Recipe> findByIngredients(String ingredient) {
         List<Recipe> recipeList = new ArrayList<>();
-        if (!recipeMap.isEmpty()) {
             for (Recipe recipe : recipeMap.values()) {
                 for (Ingredient ingredient1 : recipe.getIngredientList()) {
                     if (ingredient1.getName().equals(ingredient)) {
@@ -80,8 +75,5 @@ public class RecipeServiceImpl implements RecipeService {
                 }
             }
             return recipeList;
-        } else {
-            return null;
-        }
     }
 }

@@ -31,12 +31,7 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public Map<Long, Ingredient> showAll() {
-
-        if (!ingredientMap.isEmpty()) {
             return ingredientMap;
-        } else {
-            return null;
-        }
     }
 
     @Override
