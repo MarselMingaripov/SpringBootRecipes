@@ -35,6 +35,10 @@ public class RecipeController {
             @ApiResponse(
                     responseCode = "200",
                     description = "Рецепт добавлен"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Ошибка"
             )
     })
     public ResponseEntity<Recipe> addRecipe(@RequestBody Recipe recipe) {
@@ -57,11 +61,16 @@ public class RecipeController {
                                     array = @ArraySchema(schema = @Schema(implementation = Recipe.class))
                             )
                     }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Ошибка"
             )
     })
     public ResponseEntity<Recipe> showRecipe(@PathVariable Long id) {
-        if (recipeService.getRecipe(id) != null) {
-            return ResponseEntity.ok().body(recipeService.getRecipe(id));
+        Recipe recipe = recipeService.getRecipe(id);
+        if (recipe != null) {
+            return ResponseEntity.ok().body(recipe);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -82,11 +91,16 @@ public class RecipeController {
                                     array = @ArraySchema(schema = @Schema(implementation = Recipe.class))
                             )
                     }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Ошибка"
             )
     })
     public ResponseEntity<Map<Long, Recipe>> showAll() {
-        if (recipeService.showAllRecipes() != null){
-            return ResponseEntity.ok(recipeService.showAllRecipes());
+        Map<Long, Recipe> recipeMap = recipeService.showAllRecipes();
+        if (recipeMap != null){
+            return ResponseEntity.ok().body(recipeMap);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -101,11 +115,16 @@ public class RecipeController {
             @ApiResponse(
                     responseCode = "200",
                     description = "Удален рецепт"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Ошибка"
             )
     })
     public ResponseEntity<Recipe> deleteRecipe(@PathVariable Long id) {
-        if (recipeService.deleteRecipe(id) != null) {
-            return ResponseEntity.ok(recipeService.deleteRecipe(id));
+        Recipe recipe = recipeService.deleteRecipe(id);
+        if (recipe != null) {
+            return ResponseEntity.ok().body(recipe);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -126,11 +145,16 @@ public class RecipeController {
                                     array = @ArraySchema(schema = @Schema(implementation = Recipe.class))
                             )
                     }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Ошибка"
             )
     })
     public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @RequestBody Recipe recipe) {
-        if (recipeService.updateRecipe(id, recipe) != null) {
-            return ResponseEntity.ok(recipeService.updateRecipe(id, recipe));
+        Recipe recipe1 = recipeService.updateRecipe(id, recipe);
+        if (recipe != null) {
+            return ResponseEntity.ok().body(recipe1);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -151,14 +175,14 @@ public class RecipeController {
                                     array = @ArraySchema(schema = @Schema(implementation = Recipe.class))
                             )
                     }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Ошибка"
             )
     })
     public ResponseEntity<Recipe> findRecipeByIngredientId(@PathVariable int recipeId) {
-        if (recipeService.findRecipeByIngredientId(recipeId) != null) {
             return ResponseEntity.ok(recipeService.findRecipeByIngredientId(recipeId));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
     }
 
     @GetMapping("/find-by-ingredients")
@@ -176,13 +200,13 @@ public class RecipeController {
                                     array = @ArraySchema(schema = @Schema(implementation = Recipe.class))
                             )
                     }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Ошибка"
             )
     })
     public ResponseEntity<List<Recipe>> findByIngredients(@RequestParam String ingredient) {
-        if (recipeService.findByIngredients(ingredient) != null) {
             return ResponseEntity.ok(recipeService.findByIngredients(ingredient));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
     }
 }

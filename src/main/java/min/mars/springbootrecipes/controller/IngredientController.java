@@ -35,11 +35,15 @@ public class IngredientController {
             @ApiResponse(
                     responseCode = "200",
                     description = "Добавлен ингредиент"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Ошибка"
             )
     })
     public ResponseEntity<Ingredient> addIngredient(@RequestBody Ingredient ingredient) {
-        ingredientService.addIngredient(ingredient);
-        return ResponseEntity.ok().build();
+        Ingredient ingredient1 = ingredientService.addIngredient(ingredient);
+        return ResponseEntity.ok().body(ingredient1);
     }
 
     @GetMapping("/{id}")
@@ -57,11 +61,16 @@ public class IngredientController {
                                     array = @ArraySchema(schema = @Schema(implementation = Ingredient.class))
                             )
                     }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Ошибка"
             )
     })
     public ResponseEntity<Ingredient> showIngredient(@PathVariable Long id) {
-        if (ingredientService.getIngredient(id) != null) {
-            return ResponseEntity.ok(ingredientService.getIngredient(id));
+        Ingredient ingredient = ingredientService.getIngredient(id);
+        if (ingredient != null) {
+            return ResponseEntity.ok(ingredient);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -82,15 +91,14 @@ public class IngredientController {
                                     array = @ArraySchema(schema = @Schema(implementation = Ingredient.class))
                             )
                     }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Ошибка"
             )
     })
     public ResponseEntity<Map<Long, Ingredient>> showAll() {
-
-        if (!ingredientService.showAll().isEmpty()) {
             return ResponseEntity.ok(ingredientService.showAll());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
     }
 
     @DeleteMapping("/{id}")
@@ -102,11 +110,16 @@ public class IngredientController {
             @ApiResponse(
                     responseCode = "200",
                     description = "Удален ингредиент"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Ошибка"
             )
     })
     public ResponseEntity<Object> deleteIngredient(@PathVariable Long id) {
-        if (ingredientService.deleteIngredient(id) != null) {
-            return ResponseEntity.ok(ingredientService.deleteIngredient(id));
+        Object obj = ingredientService.deleteIngredient(id);
+        if (obj != null) {
+            return ResponseEntity.ok(obj);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -127,11 +140,16 @@ public class IngredientController {
                                     array = @ArraySchema(schema = @Schema(implementation = Ingredient.class))
                             )
                     }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Ошибка"
             )
     })
     public ResponseEntity<Ingredient> updateIngredient(@PathVariable Long id, @RequestBody Ingredient ingredient) {
-        if (ingredientService.updateIngredient(id, ingredient) != null) {
-            return ResponseEntity.ok(ingredientService.updateIngredient(id, ingredient));
+        Ingredient ingredient1 = ingredientService.updateIngredient(id, ingredient);
+        if (ingredient != null) {
+            return ResponseEntity.ok(ingredient);
         } else {
             return ResponseEntity.notFound().build();
         }
