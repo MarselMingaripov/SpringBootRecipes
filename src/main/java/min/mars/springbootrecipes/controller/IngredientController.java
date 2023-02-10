@@ -38,7 +38,11 @@ public class IngredientController {
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Ошибка"
+                    description = "Ошибка добавления ингредиента"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Ошибка валидации ингредиента"
             )
     })
     public ResponseEntity<Ingredient> addIngredient(@RequestBody Ingredient ingredient) {
@@ -64,7 +68,7 @@ public class IngredientController {
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Ошибка"
+                    description = "Ошибка получения ингредиента по ид"
             )
     })
     public ResponseEntity<Ingredient> showIngredient(@PathVariable Long id) {
@@ -94,7 +98,7 @@ public class IngredientController {
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Ошибка"
+                    description = "Ошибка поиска всех ингредиентов"
             )
     })
     public ResponseEntity<Map<Long, Ingredient>> showAll() {
@@ -113,7 +117,7 @@ public class IngredientController {
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Ошибка"
+                    description = "Ошибка удаления ингредиента по ид"
             )
     })
     public ResponseEntity<Object> deleteIngredient(@PathVariable Long id) {
@@ -143,7 +147,7 @@ public class IngredientController {
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Ошибка"
+                    description = "Ошибка обновления ингредиента по ид"
             )
     })
     public ResponseEntity<Ingredient> updateIngredient(@PathVariable Long id, @RequestBody Ingredient ingredient) {

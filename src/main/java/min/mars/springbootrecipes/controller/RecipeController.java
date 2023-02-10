@@ -38,7 +38,11 @@ public class RecipeController {
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Ошибка"
+                    description = "Ошибка добавления рецепта"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Ошибка валидации рецепта"
             )
     })
     public ResponseEntity<Recipe> addRecipe(@RequestBody Recipe recipe) {
@@ -64,7 +68,7 @@ public class RecipeController {
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Ошибка"
+                    description = "Ошибка поиска рецепта по ид"
             )
     })
     public ResponseEntity<Recipe> showRecipe(@PathVariable Long id) {
@@ -94,7 +98,7 @@ public class RecipeController {
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Ошибка"
+                    description = "Ошибка поиска всех рецептов"
             )
     })
     public ResponseEntity<Map<Long, Recipe>> showAll() {
@@ -118,7 +122,7 @@ public class RecipeController {
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Ошибка"
+                    description = "Ошибка удаления рецепта по ид"
             )
     })
     public ResponseEntity<Recipe> deleteRecipe(@PathVariable Long id) {
@@ -148,7 +152,7 @@ public class RecipeController {
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Ошибка"
+                    description = "Ошибка обновления рецепта по ид"
             )
     })
     public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @RequestBody Recipe recipe) {
@@ -178,7 +182,7 @@ public class RecipeController {
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Ошибка"
+                    description = "Ошибка поиска рецепта по ид ингредиента"
             )
     })
     public ResponseEntity<Recipe> findRecipeByIngredientId(@PathVariable int recipeId) {
@@ -203,7 +207,7 @@ public class RecipeController {
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Ошибка"
+                    description = "Ошибка поиска рецепта по имени ингредиента"
             )
     })
     public ResponseEntity<List<Recipe>> findByIngredients(@RequestParam String ingredient) {

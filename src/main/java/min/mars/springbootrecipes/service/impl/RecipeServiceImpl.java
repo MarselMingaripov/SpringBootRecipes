@@ -2,7 +2,9 @@ package min.mars.springbootrecipes.service.impl;
 
 import min.mars.springbootrecipes.entity.Ingredient;
 import min.mars.springbootrecipes.entity.Recipe;
+import min.mars.springbootrecipes.exception.ValidationException;
 import min.mars.springbootrecipes.service.RecipeService;
+import min.mars.springbootrecipes.service.ValidationService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,8 +19,17 @@ public class RecipeServiceImpl implements RecipeService {
 
     private final Map<Long, Recipe> recipeMap = new HashMap<>();
 
+    private final ValidationService validationService;
+
+    public RecipeServiceImpl(ValidationService validationService) {
+        this.validationService = validationService;
+    }
+
     @Override
     public Recipe addRecipe(Recipe recipe) {
+        if (!validationService.validateRecipe(recipe)){
+            throw new ValidationException(recipe.toString());
+        }
         recipeId++;
         return recipeMap.put(recipeId, recipe);
     }
