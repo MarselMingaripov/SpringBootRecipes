@@ -42,8 +42,8 @@ public class RecipeController {
             )
     })
     public ResponseEntity<Recipe> addRecipe(@RequestBody Recipe recipe) {
-        recipeService.addRecipe(recipe);
-        return ResponseEntity.ok().build();
+        Recipe recipe1 = recipeService.addRecipe(recipe);
+        return ResponseEntity.ok().body(recipe1);
     }
 
     @GetMapping("/{id}")

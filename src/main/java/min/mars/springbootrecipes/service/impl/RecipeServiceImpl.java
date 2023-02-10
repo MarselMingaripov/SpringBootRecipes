@@ -1,10 +1,15 @@
 package min.mars.springbootrecipes.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import min.mars.springbootrecipes.entity.Ingredient;
 import min.mars.springbootrecipes.entity.Recipe;
+import min.mars.springbootrecipes.service.FilesRecipeService;
 import min.mars.springbootrecipes.service.RecipeService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,12 +20,26 @@ public class RecipeServiceImpl implements RecipeService {
 
     private static long recipeId = 0;
 
-    private final Map<Long, Recipe> recipeMap = new HashMap<>();
+    private Map<Long, Recipe> recipeMap = new HashMap<>();
+
+    private final FilesRecipeService filesRecipeService;
+
+    public RecipeServiceImpl(FilesRecipeService filesRecipeService) {
+        this.filesRecipeService = filesRecipeService;
+    }
+
+    @PostConstruct
+    private void init(){
+
+        readFromFile();
+    }
 
     @Override
     public Recipe addRecipe(Recipe recipe) {
         recipeId++;
-        return recipeMap.put(recipeId, recipe);
+        Recipe recipe1 = recipeMap.put(recipeId, recipe);
+        saveToFile();
+        return recipe1;
     }
 
     @Override
@@ -49,7 +68,9 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public Recipe updateRecipe(Long id, Recipe recipe) {
         if (recipeMap.containsKey(id)) {
-            return recipeMap.put(id, recipe);
+            Recipe recipe1 = recipeMap.put(id, recipe);
+            saveToFile();
+            return recipe1;
         }
         return null;
     }
@@ -75,5 +96,23 @@ public class RecipeServiceImpl implements RecipeService {
                 }
             }
             return recipeList;
+    }
+
+    private void saveToFile(){
+        try {
+            String json = new ObjectMapper().writeValueAsString(recipeMap);
+            filesRecipeService.saveToFile(json);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void readFromFile(){
+        try {
+            String json = filesRecipeService.readFromFile();
+            recipeMap = new ObjectMapper().readValue(json, new TypeReference<Map<Long, Recipe>>(){});
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 }
