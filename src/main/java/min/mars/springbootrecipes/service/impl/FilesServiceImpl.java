@@ -1,9 +1,16 @@
 package min.mars.springbootrecipes.service.impl;
 
 import min.mars.springbootrecipes.service.FilesService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -66,8 +73,8 @@ public class FilesServiceImpl implements FilesService {
         }
     }
 
-
-    private boolean cleanRecipeDataFile(){
+    @Override
+    public boolean cleanRecipeDataFile(){
         try {
             Path path = Path.of(pathToFile, nameOfRecipeFile);
             Files.deleteIfExists(path);
@@ -79,7 +86,8 @@ public class FilesServiceImpl implements FilesService {
         }
     }
 
-    private boolean cleanIngredientDataFile(){
+    @Override
+    public boolean cleanIngredientDataFile(){
         try {
             Path path = Path.of(pathToFile, nameOfIngredientFile);
             Files.deleteIfExists(path);
@@ -89,5 +97,26 @@ public class FilesServiceImpl implements FilesService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public File getRecipeDataFile(){
+        return new File(pathToFile + "/" + nameOfRecipeFile);
+    }
+
+    @Override
+    public File getIngredientDataFile(){
+        return new File(pathToFile + "/" + nameOfIngredientFile);
+    }
+
+    @Override
+    public ResponseEntity<Void> getVoidResponseEntity(@RequestParam MultipartFile multipartFile, File dataFile) {
+        try(FileOutputStream fos = new FileOutputStream(dataFile)){
+            IOUtils.copy(multipartFile.getInputStream(), fos);
+            return ResponseEntity.ok().build();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 }

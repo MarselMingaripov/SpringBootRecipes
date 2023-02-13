@@ -1,1 +1,1 @@
-{"1":{"name":"string","preparingTimeInMinutes":0,"ingredientList":[{"name":"string","count":0,"measureUnit":"string"}],"preparingSteps":[{"name":"string","action":"string"}]}}
+{"1":{"name":"пирожок","preparingTimeInMinutes":0,"ingredientList":[{"name":"заготовка пирожка","count":0,"measureUnit":"string"}],"preparingSteps":[{"name":"string","action":"приготовить заготовку пирожка"}]}}
