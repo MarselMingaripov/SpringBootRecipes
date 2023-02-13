@@ -34,11 +34,13 @@ public class RecipeController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Рецепт добавлен"
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Ошибка добавления рецепта"
+                    description = "Рецепт добавлен",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = Recipe.class)
+                            )
+                    }
             ),
             @ApiResponse(
                     responseCode = "400",
@@ -62,7 +64,7 @@ public class RecipeController {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = Recipe.class))
+                                   schema = @Schema(implementation = Recipe.class)
                             )
                     }
             ),
@@ -118,7 +120,13 @@ public class RecipeController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Удален рецепт"
+                    description = "Удален рецепт",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = Recipe.class)
+                            )
+                    }
             ),
             @ApiResponse(
                     responseCode = "404",
@@ -146,9 +154,13 @@ public class RecipeController {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = Recipe.class))
+                                    schema = @Schema(implementation = Recipe.class)
                             )
                     }
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Ошибка валидации рецепта"
             ),
             @ApiResponse(
                     responseCode = "404",
@@ -156,6 +168,7 @@ public class RecipeController {
             )
     })
     public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @RequestBody Recipe recipe) {
+
         Recipe recipe1 = recipeService.updateRecipe(id, recipe);
         if (recipe != null) {
             return ResponseEntity.ok().body(recipe1);
@@ -176,7 +189,7 @@ public class RecipeController {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = Recipe.class))
+                                    schema = @Schema(implementation = Recipe.class)
                             )
                     }
             ),
@@ -201,7 +214,7 @@ public class RecipeController {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = Recipe.class))
+                                    schema = @Schema(implementation = Recipe.class)
                             )
                     }
             ),

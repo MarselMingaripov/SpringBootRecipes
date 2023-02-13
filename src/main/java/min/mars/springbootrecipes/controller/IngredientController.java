@@ -34,7 +34,13 @@ public class IngredientController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Добавлен ингредиент"
+                    description = "Добавлен ингредиент",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = Ingredient.class)
+                            )
+                    }
             ),
             @ApiResponse(
                     responseCode = "404",
@@ -62,7 +68,7 @@ public class IngredientController {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = Ingredient.class))
+                                    schema = @Schema(implementation = Ingredient.class)
                             )
                     }
             ),
@@ -113,7 +119,13 @@ public class IngredientController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Удален ингредиент"
+                    description = "Удален ингредиент",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = Ingredient.class)
+                            )
+                    }
             ),
             @ApiResponse(
                     responseCode = "404",
@@ -141,9 +153,13 @@ public class IngredientController {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = Ingredient.class))
+                                    schema = @Schema(implementation = Ingredient.class)
                             )
                     }
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Ошибка валидации ингредиента"
             ),
             @ApiResponse(
                     responseCode = "404",
