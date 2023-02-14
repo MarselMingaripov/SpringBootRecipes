@@ -9,9 +9,16 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import min.mars.springbootrecipes.entity.Recipe;
 import min.mars.springbootrecipes.service.RecipeService;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
@@ -64,7 +71,7 @@ public class RecipeController {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                   schema = @Schema(implementation = Recipe.class)
+                                    schema = @Schema(implementation = Recipe.class)
                             )
                     }
             ),
@@ -105,7 +112,7 @@ public class RecipeController {
     })
     public ResponseEntity<Map<Long, Recipe>> showAll() {
         Map<Long, Recipe> recipeMap = recipeService.showAllRecipes();
-        if (recipeMap != null){
+        if (recipeMap != null) {
             return ResponseEntity.ok().body(recipeMap);
         } else {
             return ResponseEntity.notFound().build();
@@ -199,7 +206,7 @@ public class RecipeController {
             )
     })
     public ResponseEntity<Recipe> findRecipeByIngredientId(@PathVariable int recipeId) {
-            return ResponseEntity.ok(recipeService.findRecipeByIngredientId(recipeId));
+        return ResponseEntity.ok(recipeService.findRecipeByIngredientId(recipeId));
     }
 
     @GetMapping("/find-by-ingredients")
@@ -224,6 +231,44 @@ public class RecipeController {
             )
     })
     public ResponseEntity<List<Recipe>> findByIngredients(@RequestParam String ingredient) {
-            return ResponseEntity.ok(recipeService.findByIngredients(ingredient));
+        return ResponseEntity.ok(recipeService.findByIngredients(ingredient));
+    }
+
+    @GetMapping("/download/recipes")
+    @Operation(
+            summary = "Скачать файл",
+            description = "скачать файл отформатированный для удобного чтения"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "файл сформирован и готов к скачиванию"
+            ),
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "файл пуст, нет сохраненных рецептов"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "ошибка со стороны сервера"
+            )
+    })
+    public ResponseEntity<Object> download() {
+        try {
+            Path path = recipeService.createRecipeFileByTemplate();
+            if (Files.size(path) != 0) {
+                InputStreamResource ios = new InputStreamResource(new FileInputStream(path.toFile()));
+                return ResponseEntity.ok()
+                        .contentType(MediaType.TEXT_PLAIN)
+                        .contentLength(Files.size(path))
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + "recipe.txt\"")
+                        .body(ios);
+            } else {
+                return ResponseEntity.noContent().build();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }

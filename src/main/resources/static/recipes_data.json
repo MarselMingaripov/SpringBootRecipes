@@ -1,1 +1,56 @@
-{"1":{"name":"пирожок","preparingTimeInMinutes":0,"ingredientList":[{"name":"заготовка пирожка","count":0,"measureUnit":"string"}],"preparingSteps":[{"name":"string","action":"приготовить заготовку пирожка"}]}}
+{
+  "recipeId": 3,
+  "recipes": {
+    "1": {
+      "name": "хлеб",
+      "preparingTimeInMinutes": 60,
+      "ingredientList": [
+        {
+          "name": "вода",
+          "count": 600,
+          "measureUnit": "грамм"
+        }
+      ],
+      "preparingSteps": [
+        {
+          "name": "string",
+          "action": "приготовить суп из воды"
+        }
+      ]
+    },
+    "2": {
+      "name": "чай",
+      "preparingTimeInMinutes": 60,
+      "ingredientList": [
+        {
+          "name": "вода",
+          "count": 600,
+          "measureUnit": "грамм"
+        }
+      ],
+      "preparingSteps": [
+        {
+          "name": "string",
+          "action": "приготовить суп из воды"
+        }
+      ]
+    },
+    "3": {
+      "name": "суп",
+      "preparingTimeInMinutes": 60,
+      "ingredientList": [
+        {
+          "name": "вода",
+          "count": 600,
+          "measureUnit": "грамм"
+        }
+      ],
+      "preparingSteps": [
+        {
+          "name": "string",
+          "action": "приготовить суп из воды"
+        }
+      ]
+    }
+  }
+}

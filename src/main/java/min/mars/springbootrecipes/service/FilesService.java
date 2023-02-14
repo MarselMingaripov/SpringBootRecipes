@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.nio.file.Path;
 
 public interface FilesService {
 
@@ -43,4 +44,6 @@ public interface FilesService {
     File getIngredientDataFile();
 
     ResponseEntity<Void> getVoidResponseEntity(@RequestParam MultipartFile multipartFile, File dataFile);
+
+    Path returnPath();
 }
