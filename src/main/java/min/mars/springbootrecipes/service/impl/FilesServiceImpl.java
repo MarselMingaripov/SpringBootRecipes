@@ -112,17 +112,6 @@ public class FilesServiceImpl implements FilesService {
     }
 
     @Override
-    public ResponseEntity<Void> getVoidResponseEntity(@RequestParam MultipartFile multipartFile, File dataFile) {
-        try (FileOutputStream fos = new FileOutputStream(dataFile)) {
-            IOUtils.copy(multipartFile.getInputStream(), fos);
-            return ResponseEntity.ok().build();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-    }
-
-    @Override
     public Path returnPath(){
         Path path = Path.of(pathToFile, nameOfTemplateFile);
         try {

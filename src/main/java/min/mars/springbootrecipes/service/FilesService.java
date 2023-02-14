@@ -43,7 +43,5 @@ public interface FilesService {
 
     File getIngredientDataFile();
 
-    ResponseEntity<Void> getVoidResponseEntity(@RequestParam MultipartFile multipartFile, File dataFile);
-
     Path returnPath();
 }

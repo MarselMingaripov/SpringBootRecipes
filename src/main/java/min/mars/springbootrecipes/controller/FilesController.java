@@ -4,8 +4,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import min.mars.springbootrecipes.service.FilesService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -102,7 +104,7 @@ public class FilesController {
         filesService.cleanRecipeDataFile();
         File dataFile = filesService.getRecipeDataFile();
 
-        return filesService.getVoidResponseEntity(multipartFile, dataFile);
+        return getVoidResponseEntity(multipartFile, dataFile);
     }
 
     @PostMapping(value = "/import/ingredient", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -124,8 +126,16 @@ public class FilesController {
         filesService.cleanIngredientDataFile();
         File dataFile = filesService.getIngredientDataFile();
 
-        return filesService.getVoidResponseEntity(multipartFile, dataFile);
+        return getVoidResponseEntity(multipartFile, dataFile);
     }
 
-
+    private ResponseEntity<Void> getVoidResponseEntity(@RequestParam MultipartFile multipartFile, File dataFile) {
+        try (FileOutputStream fos = new FileOutputStream(dataFile)) {
+            IOUtils.copy(multipartFile.getInputStream(), fos);
+            return ResponseEntity.ok().build();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
 }
