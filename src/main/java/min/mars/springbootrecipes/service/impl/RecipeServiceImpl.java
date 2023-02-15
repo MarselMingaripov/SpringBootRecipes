@@ -146,25 +146,28 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     public String showIngredientsForSaveToFile(List<Ingredient> ingredients){
+        String str = "";
         for (Ingredient ingredient : ingredients) {
-            return ("* " + ingredient.getName() + " - " + ingredient.getCount() + " " + ingredient.getMeasureUnit() + "\n");
+            str += ("* " + ingredient.getName() + " - " + ingredient.getCount() + " " + ingredient.getMeasureUnit() + "\n");
         }
-        return "\n";
+        return str + "\n";
     }
 
     public String showPreparingStepsForSaveToFile(List<Step> steps){
-        int counter = 1;
+        int counter = 0;
+        String str = "";
         for (Step step : steps) {
-            return ("" + counter + " " + step.getAction() + "\n");
+            counter++;
+            str += ("" + counter + " " + step.getAction() + "\n");
         }
-        return "\n";
+        return str + "\n";
     }
 
     @Override
     public Path createRecipeFileByTemplate() throws IOException {
         Path path = filesService.returnPath();
-        for (Recipe recipe : recipeMap.values()) {
             try(Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)){
+                for (Recipe recipe : recipeMap.values()) {
                 writer.append("\n" + recipe.getName() + "\n" + "Время приготовления: " + recipe.getPreparingTimeInMinutes() + "\n" + "Ингредиенты: " + "\n\n" +
                         showIngredientsForSaveToFile(recipe.getIngredientList()) + "\n"  +
                         "Инструкция приготовления:" + "\n\n" + showPreparingStepsForSaveToFile(recipe.getPreparingSteps()));

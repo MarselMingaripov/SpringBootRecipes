@@ -129,7 +129,7 @@ public class FilesController {
         return getVoidResponseEntity(multipartFile, dataFile);
     }
 
-    private ResponseEntity<Void> getVoidResponseEntity(@RequestParam MultipartFile multipartFile, File dataFile) {
+    private ResponseEntity<Void> getVoidResponseEntity(MultipartFile multipartFile, File dataFile) {
         try (FileOutputStream fos = new FileOutputStream(dataFile)) {
             IOUtils.copy(multipartFile.getInputStream(), fos);
             return ResponseEntity.ok().build();

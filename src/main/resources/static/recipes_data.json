@@ -1,5 +1,5 @@
 {
-  "recipeId": 3,
+  "recipeId": 4,
   "recipes": {
     "1": {
       "name": "хлеб",
@@ -46,6 +46,41 @@
         }
       ],
       "preparingSteps": [
+        {
+          "name": "string",
+          "action": "приготовить суп из воды"
+        }
+      ]
+    },
+    "4": {
+      "name": "хлеб",
+      "preparingTimeInMinutes": 60,
+      "ingredientList": [
+        {
+          "name": "вода",
+          "count": 600,
+          "measureUnit": "грамм"
+        },
+        {
+          "name": "вода",
+          "count": 600,
+          "measureUnit": "грамм"
+        },
+        {
+          "name": "вода",
+          "count": 600,
+          "measureUnit": "грамм"
+        }
+      ],
+      "preparingSteps": [
+        {
+          "name": "string",
+          "action": "приготовить суп из воды"
+        },
+        {
+          "name": "string",
+          "action": "приготовить суп из воды"
+        },
         {
           "name": "string",
           "action": "приготовить суп из воды"
