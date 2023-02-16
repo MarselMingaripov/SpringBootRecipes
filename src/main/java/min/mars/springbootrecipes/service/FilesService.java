@@ -1,5 +1,12 @@
 package min.mars.springbootrecipes.service;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.nio.file.Path;
+
 public interface FilesService {
 
     /**
@@ -27,4 +34,14 @@ public interface FilesService {
      * @return
      */
     String readIngredientFromFile();
+
+    boolean cleanRecipeDataFile();
+
+    boolean cleanIngredientDataFile();
+
+    File getRecipeDataFile();
+
+    File getIngredientDataFile();
+
+    Path returnPath();
 }

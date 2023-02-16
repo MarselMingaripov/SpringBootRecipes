@@ -4,6 +4,7 @@ import min.mars.springbootrecipes.service.FilesService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,10 +21,12 @@ public class FilesServiceImpl implements FilesService {
     @Value("${name.of.ingredient.file}")
     private String nameOfIngredientFile;
 
+    @Value("${name.of.template.recipes}")
+    private String nameOfTemplateFile;
 
 
     @Override
-    public boolean saveRecipeToFile(String json){
+    public boolean saveRecipeToFile(String json) {
         try {
             cleanRecipeDataFile();
             Files.writeString(Path.of(pathToFile, nameOfRecipeFile), json);
@@ -35,7 +38,7 @@ public class FilesServiceImpl implements FilesService {
     }
 
     @Override
-    public String readRecipeFromFile(){
+    public String readRecipeFromFile() {
         try {
             return Files.readString(Path.of(pathToFile, nameOfRecipeFile));
         } catch (IOException e) {
@@ -45,7 +48,7 @@ public class FilesServiceImpl implements FilesService {
     }
 
     @Override
-    public boolean saveIngredientToFile(String json){
+    public boolean saveIngredientToFile(String json) {
         try {
             cleanIngredientDataFile();
             Files.writeString(Path.of(pathToFile, nameOfIngredientFile), json);
@@ -57,7 +60,7 @@ public class FilesServiceImpl implements FilesService {
     }
 
     @Override
-    public String readIngredientFromFile(){
+    public String readIngredientFromFile() {
         try {
             return Files.readString(Path.of(pathToFile, nameOfIngredientFile));
         } catch (IOException e) {
@@ -66,8 +69,8 @@ public class FilesServiceImpl implements FilesService {
         }
     }
 
-
-    private boolean cleanRecipeDataFile(){
+    @Override
+    public boolean cleanRecipeDataFile() {
         try {
             Path path = Path.of(pathToFile, nameOfRecipeFile);
             Files.deleteIfExists(path);
@@ -79,7 +82,8 @@ public class FilesServiceImpl implements FilesService {
         }
     }
 
-    private boolean cleanIngredientDataFile(){
+    @Override
+    public boolean cleanIngredientDataFile() {
         try {
             Path path = Path.of(pathToFile, nameOfIngredientFile);
             Files.deleteIfExists(path);
@@ -89,5 +93,27 @@ public class FilesServiceImpl implements FilesService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public File getRecipeDataFile() {
+        return new File(pathToFile + "/" + nameOfRecipeFile);
+    }
+
+    @Override
+    public File getIngredientDataFile() {
+        return new File(pathToFile + "/" + nameOfIngredientFile);
+    }
+
+    @Override
+    public Path returnPath(){
+        Path path = Path.of(pathToFile, nameOfTemplateFile);
+        try {
+            Files.deleteIfExists(path);
+            Files.createFile(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return path;
     }
 }

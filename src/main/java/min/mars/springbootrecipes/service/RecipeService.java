@@ -2,6 +2,8 @@ package min.mars.springbootrecipes.service;
 
 import min.mars.springbootrecipes.entity.Recipe;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
@@ -19,4 +21,6 @@ public interface RecipeService {
     Recipe findRecipeByIngredientId(int id);
 
     List<Recipe> findByIngredients(String ingredient);
+
+    Path createRecipeFileByTemplate() throws IOException;
 }
